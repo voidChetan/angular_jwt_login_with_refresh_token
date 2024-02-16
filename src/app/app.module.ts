@@ -6,6 +6,9 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './pages/login/login.component';
 import { LayoutComponent } from './pages/layout/layout.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { HTTP_INTERCEPTORS, HttpClientModule, provideHttpClient, withInterceptors } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { customInterceptor } from './services/custom.interceptor';
 
 @NgModule({
   declarations: [
@@ -16,9 +19,13 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule
   ],
-  providers: [],
+  providers: [
+    provideHttpClient(withInterceptors([customInterceptor])) 
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
